@@ -33,7 +33,7 @@ namespace Quiron.LojaVirtual.Web.Controllers
                 {
                     PaginaAtual = pagina,
                     ItensPorPagina = ProdutosPorPagina,
-                    ItensTotal = repositorio.Produtos.Count()
+                    ItensTotal = categoria == null ? repositorio.Produtos.Count() : repositorio.Produtos.Count(e => e.Categoria == categoria)
                 },
 
                 CategoriaAtual = categoria
