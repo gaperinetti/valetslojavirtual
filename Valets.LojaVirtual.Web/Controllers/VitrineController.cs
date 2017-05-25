@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Valets.LojaVirtual.Dominio.Repositorio;
 using Valets.LojaVirtual.Web.Models;
 
-namespace Valets.LojaVirtual.Web.Controllers
+namespace Quiron.LojaVirtual.Web.Controllers
 {
+
+
     public class VitrineController : Controller
     {
         private ProdutosRepositorio repositorio;
-        public int ProdutosPorPagina = 8;
+        public int ProdutosPorPagina = 5;
 
-        // GET: Vitrine
-        public ViewResult ListaProdutos(int pagina = 1)
+
+        public ViewResult ListaProdutos(string categoria,int pagina = 1)
         {
             repositorio = new ProdutosRepositorio();
 
@@ -22,25 +22,25 @@ namespace Valets.LojaVirtual.Web.Controllers
             {
 
                 Produtos = repositorio.Produtos
-                .OrderBy(p => p.Descricao)
-                .Skip((pagina - 1) * ProdutosPorPagina)
-                .Take(ProdutosPorPagina),
+                    .Where(p => categoria == null || p.Categoria.Trim() == categoria)
+                    .OrderBy(p => p.Descricao)
+                    .Skip((pagina - 1) * ProdutosPorPagina)
+                    .Take(ProdutosPorPagina),
 
-            Paginacao = new Paginacao
+
+
+                Paginacao = new Paginacao
                 {
                     PaginaAtual = pagina,
                     ItensPorPagina = ProdutosPorPagina,
                     ItensTotal = repositorio.Produtos.Count()
-                    
-                }
+                },
 
+                CategoriaAtual = categoria
             };
-                    
-            
+
 
             return View(model);
-
-            
         }
     }
 }
