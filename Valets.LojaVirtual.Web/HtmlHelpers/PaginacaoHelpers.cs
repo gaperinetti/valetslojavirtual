@@ -18,7 +18,7 @@ namespace Valets.LojaVirtual.Web.HtmlHelpers
             {
                 TagBuilder tag = new TagBuilder("a");
                 tag.MergeAttribute("href",paginaUrl(i));
-                tag.InnerHtml = 1.ToString();
+                tag.InnerHtml = i.ToString();
 
                 if(i == paginacao.PaginaAtual)
                 {
